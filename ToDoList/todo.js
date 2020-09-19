@@ -7,6 +7,15 @@ const TODO_LS = "toDos"; //key
 //로멀에 저장할 todo list
 const toDoArr = [];
 
+function deleteToDo(event){
+    //console.log(event.target.parentNode);
+    const btn = event.target;
+    const li = btn.parentNode;
+    //html에서 지우기
+    toDoList.removeChild(li);
+    //[TO BE ADDED]
+}
+
 function saveTodos(){
     localStorage.setItem(TODO_LS, JSON.stringify(toDoArr));
 }
@@ -19,6 +28,8 @@ function paintTodo(text){
     const span = document.createElement("span");
     const newId = toDoArr.length + 1;
     delBtn.innerHTML = "❌";
+    delBtn.addEventListener("click", deleteToDo);
+
     span.innerText = text;
     li.appendChild(span);
     li.appendChild(delBtn);
@@ -41,9 +52,25 @@ function handleSubmit(event){
     toDoInput.value = "";
 }
 
+//개발할떄 확인하려고
+function showToDo(toDo){
+    console.log(toDo.text);
+}
+
 function loadToDos(){
     const toDos_loaded = localStorage.getItem(TODO_LS);
     if( toDos_loaded !== null){
+        //string을 다시 JSON으로 파싱
+        const toDos_parsed = JSON.parse(toDos_loaded);
+        //console.log(toDos_loaded);
+        //console.log(toDos_parsed);
+        //toDos_parsed.forEach(showtoDo);
+
+        for (let i=0; i < toDos_parsed.length; i++ ){
+            paintTodo(toDos_parsed[i].text)
+        }
+
+
     }else{
     //to do 가 없을떄 - 처음
     }    
