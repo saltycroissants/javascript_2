@@ -2,28 +2,35 @@ const toDoForm = document.querySelector(".toDoForm-js"),
     toDoInput = toDoForm.querySelector("input"),
     toDoList = document.querySelector(".toDoList-js");
 
-const TODO_LS = "toDos";
+const TODO_LS = "toDos"; //key
 
 //로멀에 저장할 todo list
-const toDos = [];
+const toDoArr = [];
+
+function saveTodos(){
+    localStorage.setItem(TODO_LS, JSON.stringify(toDoArr));
+}
 
 function paintTodo(text){
     //console.log(text);
     //html에 li 생성
     const li = document.createElement("li");
     const delBtn = document.createElement("button");
-    delBtn.innerHTML = "❌";
     const span = document.createElement("span");
+    const newId = toDoArr.length + 1;
+    delBtn.innerHTML = "❌";
     span.innerText = text;
     li.appendChild(span);
     li.appendChild(delBtn);
     toDoList.appendChild(li);
-
+    li.id = newId;
     const toDo_object ={
         text : text ,
-        id : toDos.length + 1
+        id : newId
     };
 
+    toDoArr.push(toDo_object);
+    saveTodos();
 }
 
 function handleSubmit(event){
@@ -35,8 +42,8 @@ function handleSubmit(event){
 }
 
 function loadToDos(){
-    const toDos = localStorage.getItem(TODO_LS);
-    if( toDos !== null){
+    const toDos_loaded = localStorage.getItem(TODO_LS);
+    if( toDos_loaded !== null){
     }else{
     //to do 가 없을떄 - 처음
     }    
