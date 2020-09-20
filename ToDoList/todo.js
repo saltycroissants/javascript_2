@@ -5,7 +5,7 @@ const toDoForm = document.querySelector(".toDoForm-js"),
 const TODO_LS = "toDos"; //key
 
 //로멀에 저장할 todo list
-const toDoArr = [];
+let toDoArr = [];
 
 function deleteToDo(event){
     //console.log(event.target.parentNode);
@@ -13,7 +13,15 @@ function deleteToDo(event){
     const li = btn.parentNode;
     //html에서 지우기
     toDoList.removeChild(li);
-    //[TO BE ADDED]
+    /*
+    const cleanToDoArr = toDoArr.filter(function(toDo){
+        return toDo.id != li.id;
+    });*/
+    //using arrow function
+    const cleanToDoArr = toDoArr.filter(toDo => toDo.id != li.id);
+    console.log(cleanToDoArr);
+    toDoArr = cleanToDoArr
+    saveTodos();
 }
 
 function saveTodos(){
